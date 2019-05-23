@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Discussion;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateDiscussion;
 
 class DiscussionController extends Controller
 {
@@ -14,7 +15,9 @@ class DiscussionController extends Controller
      */
     public function index()
     {
-        return view('discussions.index');
+        return view('discussions.index',[
+            'discussions' => Discussion::paginate(5)
+        ]);
     }
 
     /**
@@ -33,9 +36,18 @@ class DiscussionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateDiscussion  $request)
     {
-        //
+        auth()->user()->discussions()->create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'channel_id' => $request->channel,
+            'slug' => str_slug($request->title)
+        ]);
+
+        session()->flash('success','Discussion Posted');
+
+        return redirect()->route('discussions.index');
     }
 
     /**
@@ -46,7 +58,7 @@ class DiscussionController extends Controller
      */
     public function show(Discussion $discussion)
     {
-        //
+        return view('discussions.show')->withDiscussion($discussion);
     }
 
     /**

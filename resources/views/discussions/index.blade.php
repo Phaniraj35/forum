@@ -8,13 +8,48 @@
         </div>
 
         <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
+           
+            @foreach ($discussions as $discussion)
+                
+                <div class="card card-primary">
+                    
+                    
+                    <div class="card-header">
+                        
+                        <div class="d-flex justify-content-between">
+                            
+                            <div>
+                                <img height="40px" width="40px" style="border-radius:50%;" src="{{Gravatar::src($discussion->author->email)}}" alt="">
+                                <span class="ml-2">{{$discussion->author->name}}</span>
+                            </div>
 
-            You are logged in!
+
+                            <div>
+
+                            <a href="{{route('discussions.show',$discussion->slug)}}" class="btn btn-sm btn-primary">View</a>
+
+                            </div>
+                        
+                        </div> <!--main-flex-->
+                    
+                    </div> <!--card-header-inner-->
+
+
+                    <div class="card-body">
+                        
+                        <div class="text-center">
+                            <strong>{{$discussion->title}}</strong>
+                        </div>
+                    
+                    </div> <!--card body inner-->
+                    
+                
+                </div> <!--card-inner-->
+
+            @endforeach
+
+            {{$discussions->links()}}
+
         </div>
     </div>
        

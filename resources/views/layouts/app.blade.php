@@ -9,8 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,6 +17,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+    @yield('css')
+
 </head>
 <body>
     <div id="app">
@@ -78,15 +81,33 @@
             <div class="row">
                 
                 <div class="col-sm-4">
-                    <ul class="list-group">
+
+                    <a href="{{route('discussions.create')}}" class="btn btn-primary mb-2 btn-block text-white">Add Discussion</a>
+                    <div class="card">
+                    
                         
-                        @foreach ($channels as $channel)
+                        <div class="card-header">
                             
-                            <li class="list-group-item">{{$channel->name}}</li>
+                            Channels
+                        
+                        </div> <!--card head-->
 
-                        @endforeach
+                        <div class="card body">
+                        
+                            <ul class="list-group">
+                    
+                                @foreach ($channels as $channel)
+                                    
+                                    <li class="list-group-item">{{$channel->name}}</li>
+        
+                                @endforeach
+        
+                                </ul>
+                        
+                        </div> <!--bodyy-->
 
-                    </ul>
+                    
+                    </div> <!--card-->
                 </div>
 
 
@@ -102,5 +123,12 @@
             
         </main>
     </div>
+
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    @yield('js')
+
 </body>
 </html>
